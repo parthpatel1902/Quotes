@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        .main-squre{
+            margin: 10%;
+            border: 2px solid #d1d1ff;
+            height: 500px;
+            background-color: skyblue;
+            box-shadow: 2px 3px 16px 2px;
+        }
+        img{
+            margin-left: 1140px;
+        }
+        .sub-squre{
+            margin: 0% 5%;
+            border: 2px solid white;
+            height: 300px;
+            background-color: #d1d1ff;
+            box-shadow: 2px 3px 16px 2px;
+        }
+        button{
+            width: 1080px;
+            height: 30px;
+            background-color: blueviolet;
+            border: 2px solid #4CB9E7;
+            margin-top: 10px;
+            font-size: larger;
+            color: #d1d1ff;
+        }
+        p{
+            padding-top: 80px;
+            font-size: xx-large;
+            font-family: cursive;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <div class="main-squre">
+            <img id="imgButton" width="50" height="50" src="https://img.icons8.com/ios-filled/50/twitter.png" alt="twitter"/>
+            <div class="sub-squre">
+                <p id="quo"></p>
+                <h2 style="padding-left: 613px;padding-top: 21px;">Author : <span id="auo"></span></h2>
+            </div>  
+            <button id="newQuo" type="button">New Quote</button>
+        </div>
+    </center>
+    <script>
+
+        let RealData = "";
+
+        const quo = document.getElementById('quo');
+        const auo = document.getElementById('auo');
+        const newQuo = document.getElementById('newQuo');
+        const img = document.getElementById('imgButton');
+
+        let num = '';
+
+        const getNewQuotes = () =>{
+            num = Math.floor(Math.random() * 11);
+            quo.innerText = `${RealData[num].text}`;
+            auo.innerText = `${RealData[num].author}`;
+        }
+
+        const getQuotes = async () =>{
+            const api = "https://type.fit/api/quotes";
+            try {
+                let data = await fetch(api);
+                RealData = await data.json();
+            } catch (error) {
+                
+            }
+        }
+
+        newQuo.addEventListener('click',getNewQuotes);
+
+        img.addEventListener('click',()=>{
+            let tweetPost = `https://twitter.com/intent/tweet?text=${RealData[num].text}`;
+            window.open(tweetPost);
+        })
+
+        getQuotes();
+
+    </script>
+</body>
+</html>
